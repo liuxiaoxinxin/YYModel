@@ -108,26 +108,26 @@ extension GithubUserObjectMapper {
         
         
         
-        print("SwiftyJSON(#):      ", separator: "", terminator: "")
-        let swiftJson = JSON(data: data)
-        start = CACurrentMediaTime()
-        for _ in 1...10000 {
-            _ = GithubUserSwifty(fromJson: swiftJson)
-        }
-        end = CACurrentMediaTime()
-        time = (end - start) * 1000.0
-        print(String(format:"%8.2f", time) + "   ", separator: "", terminator: "")
-        
-        
-        let githubUserSwifty = GithubUserSwifty(fromJson: swiftJson)
-        start = CACurrentMediaTime()
-        for _ in 1...10000 {
-            _ = githubUserSwifty.toDictionary()
-        }
-        end = CACurrentMediaTime()
-        time = (end - start) * 1000.0
-        print(String(format:"%8.2f", time), separator: "", terminator: "")
-        print("")
+//        print("SwiftyJSON(#):      ", separator: "", terminator: "")
+//        let swiftJson = JSON(data: data)
+//        start = CACurrentMediaTime()
+//        for _ in 1...10000 {
+//            _ = GithubUserSwifty(fromJson: swiftJson)
+//        }
+//        end = CACurrentMediaTime()
+//        time = (end - start) * 1000.0
+//        print(String(format:"%8.2f", time) + "   ", separator: "", terminator: "")
+//        
+//        
+//        let githubUserSwifty = GithubUserSwifty(fromJson: swiftJson)
+//        start = CACurrentMediaTime()
+//        for _ in 1...10000 {
+//            _ = githubUserSwifty.toDictionary()
+//        }
+//        end = CACurrentMediaTime()
+//        time = (end - start) * 1000.0
+//        print(String(format:"%8.2f", time), separator: "", terminator: "")
+//        print("")
         
         
         

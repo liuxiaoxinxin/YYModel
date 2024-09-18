@@ -207,6 +207,16 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)yy_modelIsEqual:(id)model;
 
+
+/**
+ 将 Another object 所有非空值赋值给 self object.
+ 
+ @param model  Another object.
+ 
+ @return 成功返回`YES` .
+ */
+- (BOOL)yy_modelSetNonnullValueWithModel:(id)model;
+
 /**
  Description method for debugging purposes based on properties.
  

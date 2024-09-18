@@ -1763,6 +1763,20 @@ static NSString *ModelDescription(NSObject *model) {
     return YES;
 }
 
+- (BOOL)yy_modelSetNonnullValueWithModel:(id)model {
+    if (!model) return NO;
+    _YYModelMeta *modelMeta = [_YYModelMeta metaWithClass:self.class];
+    for (_YYModelPropertyMeta *propertyMeta in modelMeta->_allPropertyMetas) {
+        if (!propertyMeta->_isKVCCompatible) continue;
+        id value = [model valueForKey:NSStringFromSelector(propertyMeta->_getter)];
+        if (value == nil) continue;
+        if ([value isKindOfClass:[NSString class]] && [value isEqualToString:@""]) continue;
+        if ([value isKindOfClass:[NSNumber class]] && [value isEqualToNumber:@0]) continue;
+        ModelSetValueForProperty(self, value, propertyMeta);
+    }
+    return YES;
+}
+
 - (NSString *)yy_modelDescription {
     return ModelDescription(self);
 }

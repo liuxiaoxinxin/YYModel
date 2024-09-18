@@ -652,9 +652,62 @@
         printf("%8.2f\n", (end - begin) * 1000);
     }
     
+    
+    {
+        YYWeiboStatus *weiboModel1 = [YYWeiboStatus yy_modelWithJSON:json];
+        
+        YYWeiboStatus *weiboModel2 = [YYWeiboStatus yy_modelWithJSON:json];
+        weiboModel2.scheme = @"tessssst";
+        weiboModel2.geo = @"Hangzhou Xihu";
+
+        begin = CACurrentMediaTime();
+        [weiboModel1 yy_modelSetNonnullValueWithModel:weiboModel2];
+        end = CACurrentMediaTime();
+        if ([weiboModel1.scheme isEqualToString:weiboModel2.scheme] && [weiboModel1.geo isEqualToString:weiboModel2.geo]) {
+            NSLog(@"yy_modelSetNonnullValueWithModel 拷贝: %.2f", (end - begin) * 1000);
+        } else {
+            NSLog(@"yy_modelSetNonnullValueWithModel 拷贝: ❎错误 %@ %@", weiboModel1.scheme, weiboModel1.geo);
+        }
+
+        weiboModel1 = [YYWeiboStatus yy_modelWithJSON:json];
+        
+        begin = CACurrentMediaTime();
+        NSDictionary *dic = [self modelToJSONObjectWithoutEmptyValue:weiboModel2];
+        [weiboModel1 yy_modelSetWithJSON: dic];
+        end = CACurrentMediaTime();
+        if ([weiboModel1.scheme isEqualToString:weiboModel2.scheme] && [weiboModel1.geo isEqualToString:weiboModel2.geo]) {
+            NSLog(@"先转字典再转模型 拷贝: %.2f", (end - begin) * 1000);
+        } else {
+            NSLog(@"先转字典再转模型 拷贝: ❎错误 %@ %@", weiboModel1.scheme, weiboModel1.geo);
+        }
+    }
+    
     printf("----------------------\n");
     printf("\n");
+    
+//yy_modelSetNonnullValueWithModel转换: 0.09
+//yy_modelSetWithJSON 转换: 0.28
+    
 }
+
+- (nullable id)modelToJSONObjectWithoutEmptyValue:(NSObject *)model {
+    id obj = model.yy_modelToJSONObject;
+    if ([obj isKindOfClass:[NSDictionary class]]) {
+        NSMutableDictionary *mdic = [obj mutableCopy];
+        [obj enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            if ([obj isKindOfClass:[NSString class]]
+                && [@"" isEqualToString:obj]) {
+                [mdic removeObjectForKey:key];
+            } else if ([obj isKindOfClass:[NSNumber class]]
+                      && [@0 isEqualToNumber:obj]) {
+                [mdic removeObjectForKey:key];
+            }
+        }];
+        obj = mdic;
+    }
+    return obj;
+}
+
 
 - (void)testRobustness {
     
@@ -863,6 +916,7 @@
         
         printf("\n");
     }
+    
     
 }
 
