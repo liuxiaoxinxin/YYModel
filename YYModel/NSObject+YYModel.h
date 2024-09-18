@@ -134,6 +134,27 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)yy_modelSetWithDictionary:(NSDictionary *)dic;
 
+
+/**
+ 用另一个对象的非空属性值设置当前对象属性值。如果 Another object 是不同类型，请使用' yy_modelSetWithAnyModel '。
+ Set the receiver's properties with Another object, Only set Nonnull Value. If your object is of a different type, please use `yy_modelSetWithAnyModel`.
+
+ @param model  Another object.
+ 
+ @return Whether succeed .
+ */
+- (BOOL)yy_modelSetNonnullValueWithModel:(NSObject *)model;
+
+/**
+ 用不同类型的对象设置接收者的属性，只设置共同拥有的属性。
+ Set the receiver's properties with different type object, Only set common properties.
+ 
+ @param model  Another object.
+ 
+ @return Whether succeed .
+ */
+- (BOOL)yy_modelSetWithAnyModel:(NSObject *)model;
+
 /**
  Generate a json object from the receiver's properties.
  
@@ -206,16 +227,6 @@ NS_ASSUME_NONNULL_BEGIN
  @return `YES` if the reciever is equal to the object, otherwise `NO`.
  */
 - (BOOL)yy_modelIsEqual:(id)model;
-
-
-/**
- 将 Another object 所有非空值赋值给 self object.
- 
- @param model  Another object.
- 
- @return 成功返回`YES` .
- */
-- (BOOL)yy_modelSetNonnullValueWithModel:(id)model;
 
 /**
  Description method for debugging purposes based on properties.

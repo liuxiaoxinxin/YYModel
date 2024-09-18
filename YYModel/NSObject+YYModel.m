@@ -1520,6 +1520,43 @@ static NSString *ModelDescription(NSObject *model) {
     return YES;
 }
 
+- (BOOL)yy_modelSetNonnullValueWithModel:(NSObject *)model {
+    if (!model || ![model isKindOfClass:self.class]) return NO;
+    _YYModelMeta *modelMeta = [_YYModelMeta metaWithClass:self.class];
+    for (_YYModelPropertyMeta *propertyMeta in modelMeta->_allPropertyMetas) {
+        if (!propertyMeta->_isKVCCompatible) continue;
+        id value = [model valueForKey:NSStringFromSelector(propertyMeta->_getter)];
+        if (value == nil) continue;
+        if ([value isKindOfClass:[NSString class]] && [value isEqualToString:@""]) continue;
+        if ([value isKindOfClass:[NSNumber class]] && [value isEqualToNumber:@0]) continue;
+        ModelSetValueForProperty(self, value, propertyMeta);
+    }
+    return YES;
+}
+
+- (BOOL)yy_modelSetWithAnyModel:(NSObject *)model {
+    if (!model) {
+        return NO;
+    }
+    _YYModelMeta *thisMeta = [_YYModelMeta metaWithClass:self.class];
+    _YYModelMeta *thatMeta = [_YYModelMeta metaWithClass:model.class];
+    NSMutableArray *unionPropertyMetas = [NSMutableArray new];
+    [thisMeta->_mapper enumerateKeysAndObjectsUsingBlock:^(NSString  * _Nonnull key, _YYModelPropertyMeta * _Nonnull obj, BOOL * _Nonnull stop) {
+        _YYModelPropertyMeta *thatProperty = thatMeta->_mapper[key];
+        if (thatProperty && thatProperty->_type == obj->_type) {
+            [unionPropertyMetas addObject:obj];
+        }
+    }];
+    if (0 == unionPropertyMetas.count) return NO;
+    for (_YYModelPropertyMeta *propertyMeta in unionPropertyMetas) {
+        if (!propertyMeta->_isKVCCompatible) continue;
+        id value = [model valueForKey:NSStringFromSelector(propertyMeta->_getter)];
+        if (value == nil) continue;
+        ModelSetValueForProperty(self, value, propertyMeta);
+    }
+    return YES;
+}
+
 - (id)yy_modelToJSONObject {
     /*
      Apple said:
@@ -1759,20 +1796,6 @@ static NSString *ModelDescription(NSObject *model) {
         if (this == that) continue;
         if (this == nil || that == nil) return NO;
         if (![this isEqual:that]) return NO;
-    }
-    return YES;
-}
-
-- (BOOL)yy_modelSetNonnullValueWithModel:(id)model {
-    if (!model) return NO;
-    _YYModelMeta *modelMeta = [_YYModelMeta metaWithClass:self.class];
-    for (_YYModelPropertyMeta *propertyMeta in modelMeta->_allPropertyMetas) {
-        if (!propertyMeta->_isKVCCompatible) continue;
-        id value = [model valueForKey:NSStringFromSelector(propertyMeta->_getter)];
-        if (value == nil) continue;
-        if ([value isKindOfClass:[NSString class]] && [value isEqualToString:@""]) continue;
-        if ([value isKindOfClass:[NSNumber class]] && [value isEqualToNumber:@0]) continue;
-        ModelSetValueForProperty(self, value, propertyMeta);
     }
     return YES;
 }
