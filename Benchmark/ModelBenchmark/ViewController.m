@@ -661,7 +661,11 @@
         weiboModel2.geo = @"Hangzhou Xihu";
 
         begin = CACurrentMediaTime();
-        [weiboModel1 yy_modelSetNonnullValueWithModel:weiboModel2];
+        @autoreleasepool {
+            for (int i = 0; i < count; i++) {
+                [weiboModel1 yy_modelSetNonnullValueWithModel:weiboModel2];
+            }
+        }
         end = CACurrentMediaTime();
         if ([weiboModel1.scheme isEqualToString:weiboModel2.scheme] && [weiboModel1.geo isEqualToString:weiboModel2.geo]) {
             NSLog(@"yy_modelSetNonnullValueWithModel 拷贝: %.2f", (end - begin) * 1000);
@@ -672,14 +676,20 @@
         weiboModel1 = [YYWeiboStatus yy_modelWithJSON:json];
         
         begin = CACurrentMediaTime();
-        NSDictionary *dic = [self modelToJSONObjectWithoutEmptyValue:weiboModel2];
-        [weiboModel1 yy_modelSetWithJSON: dic];
+        @autoreleasepool {
+            for (int i = 0; i < count; i++) {
+                NSDictionary *dic = [self modelToJSONObjectWithoutEmptyValue:weiboModel2];
+                [weiboModel1 yy_modelSetWithJSON: dic];
+            }
+        }
         end = CACurrentMediaTime();
         if ([weiboModel1.scheme isEqualToString:weiboModel2.scheme] && [weiboModel1.geo isEqualToString:weiboModel2.geo]) {
             NSLog(@"先转字典再转模型 拷贝: %.2f", (end - begin) * 1000);
         } else {
             NSLog(@"先转字典再转模型 拷贝: ❎错误 %@ %@", weiboModel1.scheme, weiboModel1.geo);
         }
+        
+        
     }
     
     printf("----------------------\n");

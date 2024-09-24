@@ -136,7 +136,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- 用另一个对象的非空属性值设置当前对象属性值。如果 Another object 是不同类型，请使用' yy_modelSetWithAnyModel '。
+ 用另一个对象的非空属性值设置当前对象属性值。如果 Another object 是不同类型，请使用 `yy_modelSetWithAnyModel`。
  Set the receiver's properties with Another object, Only set Nonnull Value. If your object is of a different type, please use `yy_modelSetWithAnyModel`.
 
  @param model  Another object.
@@ -146,7 +146,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)yy_modelSetNonnullValueWithModel:(NSObject *)model;
 
 /**
- 用不同类型的对象设置接收者的属性，只设置共同拥有的属性。
+ 用不同类型的对象设置当前对象属性，只设置共同拥有的属性。
  Set the receiver's properties with different type object, Only set common properties.
  
  @param model  Another object.
