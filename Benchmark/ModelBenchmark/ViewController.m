@@ -663,14 +663,22 @@
         begin = CACurrentMediaTime();
         @autoreleasepool {
             for (int i = 0; i < count; i++) {
-                [weiboModel1 yy_modelSetNonnullValueWithModel:weiboModel2];
+                [weiboModel1 yy_modelSetNonnullValueWithModel:weiboModel2 usingEmptyCheck:^BOOL(id  _Nonnull value) {
+                    if ([value isKindOfClass:[NSString class]] && [value isEqualToString:@""]) {
+                        return YES;
+                    }
+                    if ([value isKindOfClass:[NSNumber class]] && [value isEqualToNumber:@0]) {
+                        return YES;
+                    }
+                    return NO;
+                }];
             }
         }
         end = CACurrentMediaTime();
         if ([weiboModel1.scheme isEqualToString:weiboModel2.scheme] && [weiboModel1.geo isEqualToString:weiboModel2.geo]) {
-            NSLog(@"yy_modelSetNonnullValueWithModel 拷贝: %.2f", (end - begin) * 1000);
+            NSLog(@"yy_modelSetNonnullValueWithModel Copy: %.2f", (end - begin) * 1000);
         } else {
-            NSLog(@"yy_modelSetNonnullValueWithModel 拷贝: ❎错误 %@ %@", weiboModel1.scheme, weiboModel1.geo);
+            NSLog(@"yy_modelSetNonnullValueWithModel Copy: ❎ Error %@ %@", weiboModel1.scheme, weiboModel1.geo);
         }
 
         weiboModel1 = [YYWeiboStatus yy_modelWithJSON:json];
@@ -684,20 +692,14 @@
         }
         end = CACurrentMediaTime();
         if ([weiboModel1.scheme isEqualToString:weiboModel2.scheme] && [weiboModel1.geo isEqualToString:weiboModel2.geo]) {
-            NSLog(@"先转字典再转模型 拷贝: %.2f", (end - begin) * 1000);
+            NSLog(@"Convert to dictionary and then to model: %.2f", (end - begin) * 1000);
         } else {
-            NSLog(@"先转字典再转模型 拷贝: ❎错误 %@ %@", weiboModel1.scheme, weiboModel1.geo);
+            NSLog(@"Convert to dictionary and then to model: ❎ Error %@ %@", weiboModel1.scheme, weiboModel1.geo);
         }
-        
-        
     }
     
     printf("----------------------\n");
     printf("\n");
-    
-//yy_modelSetNonnullValueWithModel转换: 0.09
-//yy_modelSetWithJSON 转换: 0.28
-    
 }
 
 - (nullable id)modelToJSONObjectWithoutEmptyValue:(NSObject *)model {

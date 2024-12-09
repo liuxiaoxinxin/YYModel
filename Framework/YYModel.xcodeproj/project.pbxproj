@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A528FC82D0689B40081B2FB /* YYTestModelToModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A528FC72D0689A40081B2FB /* YYTestModelToModel.m */; };
 		D927FA881F36EB6C007B972E /* YYModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D927FA7E1F36EB6C007B972E /* YYModel.framework */; };
 		D930C3B51F36EDC4005A2D00 /* NSObject+YYModel.h in Headers */ = {isa = PBXBuildFile; fileRef = D930C3B01F36EDC4005A2D00 /* NSObject+YYModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D930C3B61F36EDC4005A2D00 /* NSObject+YYModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D930C3B11F36EDC4005A2D00 /* NSObject+YYModel.m */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A528FC72D0689A40081B2FB /* YYTestModelToModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYTestModelToModel.m; sourceTree = "<group>"; };
 		D927FA7E1F36EB6C007B972E /* YYModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = YYModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D927FA821F36EB6C007B972E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Framework/Info.plist; sourceTree = "<group>"; };
 		D927FA871F36EB6C007B972E /* YYModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YYModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,6 +130,7 @@
 				D97395021F36EE2D00FC2DEB /* YYTestModelMapper.m */,
 				D97395031F36EE2D00FC2DEB /* YYTestModelToJSON.m */,
 				D97395041F36EE2D00FC2DEB /* YYTestNestModel.m */,
+				1A528FC72D0689A40081B2FB /* YYTestModelToModel.m */,
 				D97394F81F36EE2D00FC2DEB /* Info.plist */,
 			);
 			name = YYModelTests;
@@ -258,6 +261,7 @@
 				D97395091F36EE2D00FC2DEB /* YYTestCopyingAndCoding.m in Sources */,
 				D97395071F36EE2D00FC2DEB /* YYTestBlacklistWhitelist.m in Sources */,
 				D973950B1F36EE2D00FC2DEB /* YYTestCustomTransform.m in Sources */,
+				1A528FC82D0689B40081B2FB /* YYTestModelToModel.m in Sources */,
 				D97395061F36EE2D00FC2DEB /* YYTestAutoTypeConvert.m in Sources */,
 				D930C3B71F36EDC4005A2D00 /* NSObject+YYModel.m in Sources */,
 				D973950E1F36EE2D00FC2DEB /* YYTestModelMapper.m in Sources */,
